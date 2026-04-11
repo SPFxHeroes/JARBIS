@@ -1,5 +1,4 @@
-import { escape } from '@microsoft/sp-lodash-subset';
-import { Version } from '@microsoft/sp-core-library';
+import { Version, DisplayMode } from '@microsoft/sp-core-library';
 import {
   type IPropertyPaneConfiguration,
   PropertyPaneTextField
@@ -11,6 +10,7 @@ import styles from './JarbisWebPart.module.scss';
 import * as strings from 'JarbisWebPartStrings';
 import { getIconClassName } from '@fluentui/style-utilities';
 import { css } from '@fluentui/utilities';
+import { escape } from '@microsoft/sp-lodash-subset';
 
 export interface IJarbisWebPartProps {
   name: string;
@@ -25,8 +25,7 @@ export interface IJarbisWebPartProps {
 export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartProps> {
 
   public render(): void {
-    this.domElement.innerHTML = `
-    <div class="${styles.jarbis}">
+    const hero = `
       <div class="${styles.logo}">
         <i class="${css(styles.background, getIconClassName(escape(this.properties.backgroundIcon)))}" style="color:${escape(this.properties.backgroundColor)};"></i>
         <i class="${css(styles.foreground, getIconClassName(escape(this.properties.foregroundIcon)))}" style="color:${escape(this.properties.foregroundColor)};"></i>
@@ -36,8 +35,15 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
       </div>
       <div class="${styles.powers}">
         (${escape(this.properties.primaryPower)} + ${escape(this.properties.secondaryPower)})
-      </div>
-    </div>`;
+      </div>`;
+    
+    const generateButton = `<button>Generate</button>`;
+
+    this.domElement.innerHTML = `
+      <div class="${styles.jarbis}">
+        ${hero}
+        ${this.displayMode === DisplayMode.Edit ? generateButton : ''}
+      </div>`;
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {

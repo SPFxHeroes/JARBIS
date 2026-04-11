@@ -1,4 +1,4 @@
-# JARBIS - START OF [LAB 06](https://github.com/SPFxHeroes/J.A.R.B.I.S.-Labs/tree/main/Lab06)
+# JARBIS - START OF [LAB 07](https://github.com/SPFxHeroes/J.A.R.B.I.S.-Labs/tree/main/Lab07)
 
 ![JARBIS webpart in action](./assets/jarbis.png)
 
