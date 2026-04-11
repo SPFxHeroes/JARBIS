@@ -8,6 +8,8 @@ import type { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import styles from './JarbisWebPart.module.scss';
 import * as strings from 'JarbisWebPartStrings';
+import { getIconClassName } from '@fluentui/style-utilities';
+import { css } from '@fluentui/utilities';
 
 export interface IJarbisWebPartProps {
   description: string;
@@ -18,8 +20,9 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
   public render(): void {
     this.domElement.innerHTML = `
       <div class="${styles.jarbis}">
-        <div>
-          Logo
+        <div class="${styles.logo}">
+          <i class="${css(styles.background, getIconClassName('ShieldSolid'))}" style="color:skyblue"></i>
+          <i class="${css(styles.foreground, getIconClassName('FavoriteStarFill'))}" style="color:orange"></i>
         </div>
         <div class="${styles.name}">
           The Something Hero
