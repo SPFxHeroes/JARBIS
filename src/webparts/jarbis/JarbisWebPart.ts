@@ -1,3 +1,4 @@
+import { escape } from '@microsoft/sp-lodash-subset';
 import { Version } from '@microsoft/sp-core-library';
 import {
   type IPropertyPaneConfiguration,
@@ -12,25 +13,31 @@ import { getIconClassName } from '@fluentui/style-utilities';
 import { css } from '@fluentui/utilities';
 
 export interface IJarbisWebPartProps {
-  description: string;
+  name: string;
+  primaryPower: string;
+  secondaryPower: string;
+  foregroundColor: string;
+  backgroundColor: string;
+  foregroundIcon: string;
+  backgroundIcon: string;
 }
 
 export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartProps> {
 
   public render(): void {
     this.domElement.innerHTML = `
-      <div class="${styles.jarbis}">
-        <div class="${styles.logo}">
-          <i class="${css(styles.background, getIconClassName('ShieldSolid'))}" style="color:skyblue"></i>
-          <i class="${css(styles.foreground, getIconClassName('FavoriteStarFill'))}" style="color:orange"></i>
-        </div>
-        <div class="${styles.name}">
-          The Something Hero
-        </div>
-        <div class="${styles.powers}">
-          (Primary + Secondary)
-        </div>
-      </div>`;
+    <div class="${styles.jarbis}">
+      <div class="${styles.logo}">
+        <i class="${css(styles.background, getIconClassName(escape(this.properties.backgroundIcon)))}" style="color:${escape(this.properties.backgroundColor)};"></i>
+        <i class="${css(styles.foreground, getIconClassName(escape(this.properties.foregroundIcon)))}" style="color:${escape(this.properties.foregroundColor)};"></i>
+      </div>
+      <div class="${styles.name}">
+        The ${escape(this.properties.name)}
+      </div>
+      <div class="${styles.powers}">
+        (${escape(this.properties.primaryPower)} + ${escape(this.properties.secondaryPower)})
+      </div>
+    </div>`;
   }
 
   protected onThemeChanged(currentTheme: IReadonlyTheme | undefined): void {
@@ -65,8 +72,11 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
             {
               groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('description', {
-                  label: strings.DescriptionFieldLabel
+                PropertyPaneTextField('foregroundIcon', {
+                  label: "Foreground Icon"
+                }),
+                PropertyPaneTextField('primaryPower', {
+                  label: "Primary Power"
                 })
               ]
             }
