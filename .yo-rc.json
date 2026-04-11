@@ -1,0 +1,19 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "useGulp": false,
+    "plusBeta": false,
+    "isCreatingSolution": true,
+    "nodeVersion": "22.22.2",
+    "sdksVersions": {},
+    "version": "1.22.2",
+    "libraryName": "jarbis",
+    "libraryId": "3e624b91-078b-4f9f-9e06-b4659607fe80",
+    "environment": "spo",
+    "packageManager": "npm",
+    "solutionName": "jarbis",
+    "solutionShortDescription": "jarbis description",
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "componentType": "webpart"
+  }
+}
