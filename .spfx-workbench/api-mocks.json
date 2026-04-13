@@ -1,0 +1,17 @@
+{
+  "rules": [
+    {
+      "match": {
+        "url": "/_api/web/lists/getbytitle('powers')/items",
+        "method": "GET"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "content-type": "application/json"
+        },
+        "bodyFile": "mocks/list_Powers.json"
+      }
+    }
+  ]
+}
