@@ -34,7 +34,7 @@ export interface IJarbisWebPartProps {
 }
 
 export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartProps> {
-  private powers: IPowerItem[];
+  private powers: IPowerItem[] | undefined;
 
   public render(): void {
     const oldbuttons = this.domElement.getElementsByClassName(styles.generateButton) as HTMLCollectionOf<HTMLButtonElement>;
