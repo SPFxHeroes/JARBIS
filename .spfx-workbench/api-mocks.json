@@ -1,6 +1,7 @@
 {
   "rules": [
     {
+      "name": "Powers list items",
       "match": {
         "url": "/_api/web/lists/getbytitle('powers')/items",
         "method": "GET"
