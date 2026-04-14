@@ -11,6 +11,12 @@ import * as strings from 'JarbisWebPartStrings';
 import { getIconClassName } from '@fluentui/style-utilities';
 import { css } from '@fluentui/utilities';
 import { escape } from '@microsoft/sp-lodash-subset';
+import { IPowerItem } from './IPowerItem';
+import { spfi, SPFx } from '@pnp/sp';
+import '@pnp/sp/webs';
+import '@pnp/sp/lists';
+import '@pnp/sp/items';
+import { Caching } from "@pnp/queryable";
 
 export interface IJarbisWebPartProps {
   name: string;
@@ -20,14 +26,30 @@ export interface IJarbisWebPartProps {
   backgroundColor: string;
   foregroundIcon: string;
   backgroundIcon: string;
+
+  /**
+   * The name of the SharePoint list that contains the powers.
+   */
+  list: string;
 }
 
 export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartProps> {
+  private powers: IPowerItem[];
 
   public render(): void {
     const oldbuttons = this.domElement.getElementsByClassName(styles.generateButton) as HTMLCollectionOf<HTMLButtonElement>;
     for (let b = 0; b < oldbuttons.length; b++) {
       oldbuttons[b].removeEventListener('click', this.onGenerateHero);
+    }
+
+    if (this.displayMode === DisplayMode.Edit && this.powers === undefined) {
+      this.context.statusRenderer.displayLoadingIndicator(this.domElement, 'options');
+
+      //load the powers
+      this.getPowers().catch((error) => console.error(error));
+      return;
+    } else {
+      this.context.statusRenderer.clearLoadingIndicator(this.domElement);
     }
 
     const hero = `
@@ -49,11 +71,26 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
         ${hero}
         ${this.displayMode === DisplayMode.Edit ? generateButton : ''}
       </div>`;
-    
+
     const buttons = this.domElement.getElementsByClassName(styles.generateButton) as HTMLCollectionOf<HTMLButtonElement>;
     for (let b = 0; b < buttons.length; b++) {
       buttons[b].addEventListener('click', this.onGenerateHero);
     }
+  }
+
+  /**
+   * Gets the list of powers from SharePoint
+   */
+  private getPowers = async (): Promise<void> => {
+    const sp = spfi().using(SPFx(this.context));
+
+    // Get the list of powers from SharePoint using the name of the library specified in the property pane
+    this.powers = await sp.web.lists.getByTitle(this.properties.list).items.select('Title', 'Icon', 'Colors', 'Prefix', 'Main').using(Caching())();
+
+    console.log("Powers", this.powers);
+    
+    // Re-render the web part
+    this.render();
   }
 
   private onGenerateHero = (event: MouseEvent): void => {
