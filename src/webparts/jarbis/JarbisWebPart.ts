@@ -1,7 +1,7 @@
 import { Version, DisplayMode } from '@microsoft/sp-core-library';
 import {
   type IPropertyPaneConfiguration,
-  PropertyPaneTextField
+  PropertyPaneToggle
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import type { IReadonlyTheme } from '@microsoft/sp-component-base';
@@ -31,6 +31,11 @@ export interface IJarbisWebPartProps {
    * The name of the SharePoint list that contains the powers.
    */
   list: string;
+
+  /**
+   * Indicates if the hero's powers should be shown at render time.
+   */
+  powersVisible: boolean;
 }
 
 export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartProps> {
@@ -59,7 +64,9 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
       </div>
       <div class="${styles.name}">
         The ${escape(this.properties.name)}
-      </div>
+      </div>`;
+
+    const powerSummary = `
       <div class="${styles.powers}">
         (${escape(this.properties.primaryPower)} + ${escape(this.properties.secondaryPower)})
       </div>`;
@@ -69,6 +76,7 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
     this.domElement.innerHTML = `
       <div class="${styles.jarbis}">
         ${hero}
+        ${this.properties.powersVisible ? powerSummary : ""}
         ${this.displayMode === DisplayMode.Edit ? generateButton : ''}
       </div>`;
 
@@ -186,18 +194,13 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
     return {
       pages: [
         {
-          header: {
-            description: strings.PropertyPaneDescription
-          },
           groups: [
             {
-              groupName: strings.BasicGroupName,
               groupFields: [
-                PropertyPaneTextField('foregroundIcon', {
-                  label: "Foreground Icon"
-                }),
-                PropertyPaneTextField('primaryPower', {
-                  label: "Primary Power"
+                PropertyPaneToggle('powersVisible', {
+                  label: "Powers",
+                  onText: "Visible",
+                  offText: "Hidden"
                 })
               ]
             }
