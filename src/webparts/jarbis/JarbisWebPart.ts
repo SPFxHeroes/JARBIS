@@ -16,7 +16,7 @@ import { spfi, SPFx } from '@pnp/sp';
 import '@pnp/sp/webs';
 import '@pnp/sp/lists';
 import '@pnp/sp/items';
-import { Caching } from "@pnp/queryable";
+import { Caching } from '@pnp/queryable';
 
 export interface IJarbisWebPartProps {
   name: string;
@@ -76,7 +76,7 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
     this.domElement.innerHTML = `
       <div class="${styles.jarbis}">
         ${hero}
-        ${this.properties.powersVisible ? powerSummary : ""}
+        ${this.properties.powersVisible ? powerSummary : ''}
         ${this.displayMode === DisplayMode.Edit ? generateButton : ''}
       </div>`;
 
