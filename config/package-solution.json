@@ -1,29 +1,38 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
   "solution": {
-    "name": "JARBIS - Hero Generator",
+    "name": "JARBIS",
+    "title": "J.A.R.B.I.S. - Hero Generator",
+    "iconPath": "images/hero.png",
     "id": "3e624b91-078b-4f9f-9e06-b4659607fe80",
-    "version": "1.0.0.0",
+    "version": "1.0.0.1",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,
     "developer": {
-      "name": "",
-      "websiteUrl": "",
-      "privacyUrl": "",
-      "termsOfUseUrl": "",
-      "mpnId": "Undefined-1.22.2"
+      "name": "SPFx Heroes Workshop",
+      "websiteUrl": "https://github.com/SPFxHeroes/JARBIS",
+      "privacyUrl": "https://github.com/SPFxHeroes/JARBIS#privacy",
+      "termsOfUseUrl": "https://github.com/SPFxHeroes/JARBIS#terms-of-use",
+      "mpnId": ""
     },
+    "supportedLocales": ["en-us", "fr-fr"],
     "metadata": {
       "shortDescription": {
-        "default": "jarbis description"
+        "default": "Contains the J.A.R.B.I.S. Hero Generator and the Powers list"
       },
       "longDescription": {
-        "default": "jarbis description"
+        "default": "Generates super hero names and symbols.\n\nContains the following:\n- J.A.R.B.I.S. (Just a Rather Basic Instructional Solution) hero generator web part\n- The Powers list, which contains a list of compatible powers, colors, icons, and descriptions used when generating a new super hero."
       },
-      "screenshotPaths": [],
-      "videoUrl": "",
-      "categories": []
+      "screenshotPaths": [
+        "images/shot1.png",
+        "images/shot2.png",
+        "images/shot3.png",
+        "images/shot4.png",
+        "https://thechriskent.wordpress.com/wp-content/uploads/2025/05/spfxheroes.gif"
+      ],
+      "videoUrl": "https://youtu.be/KMU0tzLwhbE",
+      "categories": ["Productivity"]
     },
     "features": [
       {
