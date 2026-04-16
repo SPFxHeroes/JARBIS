@@ -7,7 +7,7 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import type { IReadonlyTheme } from '@microsoft/sp-component-base';
 
 import styles from './JarbisWebPart.module.scss';
-// import * as strings from 'JarbisWebPartStrings';
+import * as strings from 'JarbisWebPartStrings';
 import { getIconClassName } from '@fluentui/style-utilities';
 import { css } from '@fluentui/utilities';
 import { escape } from '@microsoft/sp-lodash-subset';
@@ -63,7 +63,7 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
         <i class="${css(styles.foreground, getIconClassName(escape(this.properties.foregroundIcon)))}" style="color:${escape(this.properties.foregroundColor)};"></i>
       </div>
       <div class="${styles.name}">
-        The ${escape(this.properties.name)}
+        ${strings.HeroDescription.replace("{0}", escape(this.properties.name))}
       </div>`;
 
     const powerSummary = `
@@ -71,7 +71,7 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
         (${escape(this.properties.primaryPower)} + ${escape(this.properties.secondaryPower)})
       </div>`;
 
-    const generateButton = `<button class="${styles.generateButton}">Generate</button>`;
+    const generateButton = `<button class="${styles.generateButton}">${strings.GenerateButtonLabel}</button>`;
 
     this.domElement.innerHTML = `
       <div class="${styles.jarbis}">
@@ -198,9 +198,9 @@ export default class JarbisWebPart extends BaseClientSideWebPart<IJarbisWebPartP
             {
               groupFields: [
                 PropertyPaneToggle('powersVisible', {
-                  label: "Powers",
-                  onText: "Visible",
-                  offText: "Hidden"
+                  label: strings.ShowPowersFieldLabel,
+                  onText: strings.ShowPowersToggleOnText,
+                  offText: strings.ShowPowersToggleOffText
                 })
               ]
             }
